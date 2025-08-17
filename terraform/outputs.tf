@@ -56,3 +56,13 @@ output "private_key_pem" {
   value       = tls_private_key.ssh_key.private_key_pem
   sensitive   = true
 }
+
+# Validation output - Key Vault name length check
+output "key_vault_name_validation" {
+  description = "Key Vault name validation (length should be 3-24 chars)"
+  value = {
+    name   = azurerm_key_vault.main.name
+    length = length(azurerm_key_vault.main.name)
+    valid  = length(azurerm_key_vault.main.name) >= 3 && length(azurerm_key_vault.main.name) <= 24
+  }
+}

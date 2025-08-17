@@ -37,6 +37,14 @@ provider "azurerm" {
 # Get current client configuration
 data "azurerm_client_config" "current" {}
 
+# Local values for resource naming
+locals {
+  # Clean project name for Key Vault (alphanumeric and dashes only, max 24 chars)
+  # Keep base name short to accommodate random suffix
+  kv_name_base   = substr(replace(replace(lower(var.project_name), "_", "-"), "/[^a-z0-9-]/", ""), 0, 8)
+  key_vault_name = "${local.kv_name_base}-kv-${random_string.suffix.result}"
+}
+
 # Generate random suffix for unique resource names
 resource "random_string" "suffix" {
   length  = 8
@@ -133,7 +141,7 @@ resource "tls_private_key" "ssh_key" {
 
 # Create Azure Key Vault
 resource "azurerm_key_vault" "main" {
-  name                        = "${var.project_name}-kv-${random_string.suffix.result}"
+  name                        = local.key_vault_name
   location                    = azurerm_resource_group.main.location
   resource_group_name         = azurerm_resource_group.main.name
   enabled_for_disk_encryption = true
