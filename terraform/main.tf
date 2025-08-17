@@ -45,12 +45,7 @@ locals {
   key_vault_name = "${local.kv_name_base}-kv-${random_string.suffix.result}"
 }
 
-# Generate random suffix for unique resource names
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-  upper   = false
-}
+
 
 # Create Resource Group
 resource "azurerm_resource_group" "main" {
