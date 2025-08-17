@@ -1,0 +1,15 @@
+# Terraform variable values
+# Copy this file to terraform.tfvars and update values as needed
+
+resource_group_name = "rg-terraform-demo"
+location           = "East US"
+project_name       = "terraform-demo"
+vm_size           = "Standard_B1s"
+admin_username    = "azureuser"
+
+tags = {
+  Environment = "Development"
+  Project     = "Terraform-Demo"
+  ManagedBy   = "Terraform"
+  CreatedBy   = "Azure-DevOps"
+}
