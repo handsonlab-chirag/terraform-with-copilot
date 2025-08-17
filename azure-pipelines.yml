@@ -69,7 +69,7 @@ stages:
         command: 'plan'
         workingDirectory: $(workingDirectory)
         environmentServiceNameAzureRM: $(azureServiceConnection)
-        commandOptions: '-var-file="terraform.tfvars" -out=tfplan'
+        commandOptions: '-out=tfplan'
     
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Terraform Plan'
